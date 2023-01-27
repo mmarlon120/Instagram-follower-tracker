@@ -23,6 +23,21 @@ def main():
     new_list = []
 # This is the simple login to check which account you'd like to check
     username = input("Username = ")
+# This block is to be able to test the program without access to
+# Instaloader
+# If you're the owner of test1 or test2 then you're already here :)
+    if username == "test1":
+        old_list = ["Elliot","Josh","Nick"]
+        new_list = ["Dylan","King Touchy","Sage", "Katana"]
+        print(comparitor(old_list, new_list))
+        exit(0)
+    elif username == "test2":
+        old_list = ["Elliot","Josh","Nick", "Cousin Canoli"]
+        new_list = ["Dylan","God King Touchy","Sage"]
+        print(comparitor(old_list, new_list))
+        exit(0)
+#This block will log into the selected account then make the
+#required follower list.
     insta_info = Insta_info(username)
     insta_info.Login()
     path = "./followers.txt"
