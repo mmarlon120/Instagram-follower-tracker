@@ -61,7 +61,6 @@ def main():
 #List Organizer is to format the information given to comparitor
 #The Format should come out as "Old List | New List"
 def list_organizer(old, new, difference):
-    string = ""
     if difference > 0:
         for follower in range(difference):
             old.append(" ")
