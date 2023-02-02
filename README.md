@@ -2,10 +2,7 @@
 The point of this program is to be able to get a list of followers and unfollowers as well as your net gain or loss of followers. I may expand its functionallity in the future but for now this is its goal.
 
 ## Prerequisits
-You will need Instaloader initialized in your computer for this program to work. Here is the github page for Instaloader to get yourself set up.
-```
-https://github.com/instaloader/instaloader
-```
+Currently working on getting rid of this section in this branch.
 
 ## What is this useful for?
 I want to get this program running for being able to manage and understand your instagram page better and be able to get more information out of what you're given. 

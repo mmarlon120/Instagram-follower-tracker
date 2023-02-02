@@ -1,22 +1,5 @@
-import instaloader
 import os.path
-
-
-
-class Insta_info:
-    def __init__(self, username):
-        self.username = username
-        self.loader = instaloader.Instaloader()
-        self.profile = instaloader.Profile.from_username(self.loader.context, self.username)
-
-    def Login(self):
-        login = self.loader.load_session_from_file(self.username)
-        return login
-    
-    def get_my_followers(self):
-        for followers in self.profile.get_followers():
-            with open("followers.txt" , "a+") as f:
-                file = f.write(followers.username+'\n')
+from InstaLogin import login_data
 
 def main():
     old_list = []
@@ -38,12 +21,11 @@ def main():
         exit(0)
 #This block will log into the selected account then make the
 #required follower list.
-    insta_info = Insta_info(username)
-    insta_info.Login()
+    login_data(username)
     path = "./followers.txt"
     if os.path.isfile(path) == False:
         print("No prior list to compare against. Making list")
-        insta_info.get_my_followers()
+
     else:
         #Getting the old follower list to compare against
         with open("followers.txt" , "r") as f:
@@ -51,7 +33,7 @@ def main():
             old_list = old_data.split("\n")
         #Making the new list to compare against the old
         os.remove("followers.txt")
-        insta_info.get_my_followers()
+
         with open("followers.txt" , "r") as f:
             new_data = f.read()
             new_list = new_data.split("\n")
@@ -89,4 +71,5 @@ def comparitor(old, new):
     print(f"Followers Gained|Lost: {net}")
     list_organizer(old, new, net)
 
-main()
+if __name__=="__main__":
+    main()
