@@ -5,37 +5,41 @@ from cryptography.fernet import Fernet
 def load_key():
     return open(".dfbec.key", "rb").read()
 
+    #The file is file.read() not the raw file
+def encryption(file):
+    newkey = Fernet.generate_key()
+    with open(".dfbec.key", "wb") as key:
+        key.write(newkey)
+    fernet = Fernet(newkey)
+    encrypted = fernet.encrypt(file)
+    return encrypted
+
+def decryption(token):
+    key = load_key()
+    fernet = Fernet(key)
+    decrypt = fernet.decrypt(token)
+    data = json.loads(decrypt.decode())
+    return data
+
+
 def login_data(username):
     with open("logindata.json", "rb") as file:
-        #Start of the decryption process
-        oldkey = load_key()
-        tokendata = file.read()
-        oldfernet = Fernet(oldkey)
-        decrypt = oldfernet.decrypt(tokendata)
-        data = json.loads(decrypt.decode())
-        
-    #This is where the actual data is sorted
-
-        dic = data
-        if username not in dic.keys():
+        token = file.read()
+        data = decryption(token)
+        if username not in data.keys():
             password = input("Input password: ")
-            dic.update({username : password})
+            data.update({username : password})
             print(f"{username} has been added to the database")
         else:
-            password = dic.get(username)
+            password = data.get(username)
             print(f"{username} | {password}")
     with open("logindata.json", "w") as file:
-        json.dump(dic, file, indent = 6)
-     
+        json.dump(data, file, indent = 6)
     #This is where the encryption starts
 
     with open("logindata.json", "rb") as file:
         data = file.read()
-        key = Fernet.generate_key()
-        with open(".dfbec.key", "wb") as file:
-            file.write(key)
-        newfernet = Fernet(key)
-        encrypted = newfernet.encrypt(data)
+        encrypted = encryption(data)
     with open("logindata.json", "wb") as file:
         file.write(encrypted)
 
